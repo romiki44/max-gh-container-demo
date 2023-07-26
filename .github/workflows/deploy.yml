@@ -15,11 +15,22 @@ jobs:
     container:
       image: node:16
     env:
-      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-      MONGODB_CLUSTER_ADDRESS: cluster0.71q2w.gcp.mongodb.net
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
-      PORT: 3000
+      # zmena na mongodb service!
+      # Netreba vlastne mongo, service bezi v kontaineri totalne izolovany
+      # netreba riesit ani credentials secrets, lebo service existije iba pri behu jobu!!
+      # ak job bezi v kontaineri, potom je cluster_adress jednoducho nazov servisu
+      # protocol je jednoducho mongodb a user+pwd je podla mongodb imagu z dockeru
+      MONGODB_CONNECTION_PROTOCOL: mongodb #mongodb+srv
+      MONGODB_CLUSTER_ADDRESS: mongodb #cluster0.71q2w.gcp.mongodb.net
+      MONGODB_USERNAME: root #${{ secrets.MONGODB_USERNAME }}
+      MONGODB_PASSWORD: example #${{ secrets.MONGODB_PASSWORD }}
+      PORT: 8080
+    services:
+      mongodb:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
     steps:
       - name: Get Code
         uses: actions/checkout@v3
