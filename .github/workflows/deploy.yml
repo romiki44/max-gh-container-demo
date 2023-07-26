@@ -12,15 +12,17 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
-    container:
-      image: node:16
+    #ak bezi kontainer, cluster_addres=mongodb (nazov servisu)
+    #ak bezi runners, cluster_address=127.0.0.1:27017 (default port)
+    # container:
+    #   image: node:16
     env:
       # zmena na mongodb service!
       # Netreba vlastne mongo, service bezi v kontaineri totalne izolovany
       # netreba riesit ani credentials secrets, lebo service existije iba pri behu jobu!!
       # ak job bezi v kontaineri, potom je cluster_adress jednoducho nazov servisu
       # protocol je jednoducho mongodb a user+pwd je podla mongodb imagu z dockeru
-      MONGODB_CONNECTION_PROTOCOL: mongodb #mongodb+srv
+      MONGODB_CONNECTION_PROTOCOL: 127.0.0.1:27017 #mongodb #mongodb+srv
       MONGODB_CLUSTER_ADDRESS: mongodb #cluster0.71q2w.gcp.mongodb.net
       MONGODB_USERNAME: root #${{ secrets.MONGODB_USERNAME }}
       MONGODB_PASSWORD: example #${{ secrets.MONGODB_PASSWORD }}
@@ -28,6 +30,10 @@ jobs:
     services:
       mongodb:
         image: mongo
+        #ak bezi v runners, treba pridat konfiguraciu portov
+        #ak bezi v kontaineri, toto netreba
+        ports:
+          - 27017:27017
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example
