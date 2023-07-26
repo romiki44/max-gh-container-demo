@@ -22,8 +22,8 @@ jobs:
       # netreba riesit ani credentials secrets, lebo service existije iba pri behu jobu!!
       # ak job bezi v kontaineri, potom je cluster_adress jednoducho nazov servisu
       # protocol je jednoducho mongodb a user+pwd je podla mongodb imagu z dockeru
-      MONGODB_CONNECTION_PROTOCOL: 127.0.0.1:27017 #mongodb #mongodb+srv
-      MONGODB_CLUSTER_ADDRESS: mongodb #cluster0.71q2w.gcp.mongodb.net
+      MONGODB_CONNECTION_PROTOCOL: mongodb #mongodb+srv
+      MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017 #cluster0.71q2w.gcp.mongodb.net
       MONGODB_USERNAME: root #${{ secrets.MONGODB_USERNAME }}
       MONGODB_PASSWORD: example #${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
